@@ -1,0 +1,662 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FluentDragDrop</name>
+    </assembly>
+    <members>
+        <member name="T:FluentDragDrop.DelayedDragDefinition">
+            <summary>
+            Defines a delayed drag and drop operation on mouse movement
+            </summary>
+        </member>
+        <member name="M:FluentDragDrop.DelayedDragDefinition.#ctor(System.Windows.Forms.Control,System.Windows.Forms.DragDropEffects)">
+            <summary>
+            Creates a new instance of the drag definition
+            </summary>
+            <param name="control">The control which starts the drag and drop operation</param>
+            <param name="effect">The desired drag and drop effect like Copy, Move or Link</param>
+        </member>
+        <member name="M:FluentDragDrop.DelayedDragDefinition.If(System.Func{System.Boolean})">
+            <summary>
+            Defines a condition which has to return true to start the drag and drop operation as
+            soon as mouse movement is detected. If this condition returns false, the drag and drop
+            operation will not be started.
+            </summary>
+            <param name="conditionEvaluator">The condition whether the drag and drop operation should be started or not</param>
+            <returns></returns>
+        </member>
+        <member name="M:FluentDragDrop.DelayedDragDefinition.WithData``1(System.Func{``0})">
+            <summary>
+            Defines the data object that should be passed through the drag and drop operation
+            </summary>
+            <typeparam name="T">The type of the data object to pass</typeparam>
+            <param name="dataEvaluator">A function to retrieve the data object to pass through the drag and drop operation</param>
+            <returns></returns>
+        </member>
+        <member name="T:FluentDragDrop.DragAndDropExtension">
+            <summary>
+            Extension methods for Fluent Drag and Drop
+            </summary>
+        </member>
+        <member name="M:FluentDragDrop.DragAndDropExtension.InitializeDragAndDrop(System.Windows.Forms.Control)">
+            <summary>
+            Initializes a drag and drop operation with Fluent Drag and Drop.
+            Call this method in the MouseDown to correctly implement the Fluent Drag and Drop pattern.
+            </summary>
+            <param name="control">The control which starts the drag and drop operation</param>
+            <returns>Call this method in the MouseDown to correctly implement the Fluent Drag and Drop pattern.</returns>
+        </member>
+        <member name="T:FluentDragDrop.DragDefinition">
+            <summary>
+            The drag definition containing the control which starts the drag and drop operation and the desired effect
+            like Copy, Move or Link.
+            </summary>
+        </member>
+        <member name="M:FluentDragDrop.DragDefinition.#ctor(System.Windows.Forms.Control,System.Windows.Forms.DragDropEffects)">
+            <summary>
+            Creates a new drag definion
+            </summary>
+            <param name="control">The control which starts the drag and drop operation</param>
+            <param name="effect">The desired drag and drop effect like Copy, Move or Link</param>
+        </member>
+        <member name="P:FluentDragDrop.DragDefinition.Control">
+            <summary>
+            Gets the control which starts the drag and drop operation
+            </summary>
+        </member>
+        <member name="P:FluentDragDrop.DragDefinition.Effect">
+            <summary>
+            Gets the desired drag and drop effect like Copy, Move or Link
+            </summary>
+        </member>
+        <member name="T:FluentDragDrop.DragDefinitionFactory">
+            <summary>
+            A factory class to instantiate drag definitions
+            </summary>
+        </member>
+        <member name="M:FluentDragDrop.DragDefinitionFactory.#ctor(System.Windows.Forms.Control)">
+            <summary>
+            Creates a new drag definition factory to instantiate drag definitions
+            </summary>
+            <param name="control">The control which starts the drag and drop operation</param>
+        </member>
+        <member name="M:FluentDragDrop.DragDefinitionFactory.Immediately">
+            <summary>
+            Starts the drag and drop operation immediately on mouse down which might work very well with static controls
+            but not with controls providing selection mechanisms like ListBoxes, ListViews, Grids, etc.
+            If you want to drag the selected items of a ListView for example, use OnMouseMove() instead.
+            </summary>
+            <returns></returns>
+            <remarks>If you want to drag the selected items on a ListView for example, use OnMouseMove() instead.</remarks>
+        </member>
+        <member name="M:FluentDragDrop.DragDefinitionFactory.OnMouseMove">
+            <summary>
+            Captures the mouse events of the target control(s) and starts the drag and drop operation as soon as the mouse
+            is moved while the left mouse button is still pressed.
+            Prefer this mode over Immediately() if you want to drag the selected items of a ListView for example because the selection 
+            is made after the mouse down event. By using Immediately() the drag and drop operation might be started before the selection is made.
+            </summary>
+            <returns></returns>
+            <remarks>
+            Prefer this mode over Immediately() if you want to drag the selected items of a ListView for example because the selection 
+            is made after the mouse down event. By using Immediately() the drag and drop operation might be started before the selection is made.
+            </remarks>
+        </member>
+        <member name="P:FluentDragDrop.DragDefinitionFactory.Control">
+            <summary>
+            Gets the control which starts the drag and drop operation
+            </summary>
+        </member>
+        <member name="P:FluentDragDrop.DragDefinitionFactory.Effect">
+            <summary>
+            Gets or sets the desired drag and drop effect like Copy, Move or Link
+            </summary>
+        </member>
+        <member name="T:FluentDragDrop.DragEffectDefinition">
+            <summary>
+            The definition class for drag effects like Copy, Move or Link
+            </summary>
+        </member>
+        <member name="M:FluentDragDrop.DragEffectDefinition.#ctor(System.Windows.Forms.Control)">
+            <summary>
+            Creates a new drag effect definition instance
+            </summary>
+            <param name="control">The control which starts the drag and drop operation</param>
+        </member>
+        <member name="M:FluentDragDrop.DragEffectDefinition.Copy">
+            <summary>
+            Defines the drag and drop effect "Copy"
+            </summary>
+        </member>
+        <member name="M:FluentDragDrop.DragEffectDefinition.Link">
+            <summary>
+            Defines the drag and drop effect "Link"
+            </summary>
+        </member>
+        <member name="M:FluentDragDrop.DragEffectDefinition.Move">
+            <summary>
+            Defines the drag and drop effect "Move"
+            </summary>
+        </member>
+        <member name="T:FluentDragDrop.DragHandler`1">
+            <summary>
+            A handler class providing hooks to implement the code on drag events of target controls
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:FluentDragDrop.DragHandler`1.DragEnter">
+            <summary>
+            Gets or sets the action hook for the DragEnter event of a control
+            </summary>
+        </member>
+        <member name="P:FluentDragDrop.DragHandler`1.DragOver">
+            <summary>
+            Gets or sets the action hook for the DragOver event of a control
+            </summary>
+        </member>
+        <member name="P:FluentDragDrop.DragHandler`1.DragDrop">
+            <summary>
+            Gets or sets the action hook for the DragDrop event of a control
+            </summary>
+        </member>
+        <member name="P:FluentDragDrop.DragHandler`1.DragLeave">
+            <summary>
+            Gets or sets the action hook for the DragLeave event of a control
+            </summary>
+        </member>
+        <member name="M:FluentDragDrop.DragHandler`1.CreateDefault">
+            <summary>
+            Creates a handler instance with default hook implementations
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:FluentDragDrop.DragOperation`1">
+            <summary>
+            Coordinates the drag and drop operation
+            </summary>
+            <typeparam name="T">The type of the data to drop</typeparam>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.#ctor(FluentDragDrop.DragDefinition,System.Func{`0},System.Func{System.Boolean})">
+            <summary>
+            Creates a new instance of the drag operation
+            </summary>
+            <param name="definition">The drag definition containing the source control and the drag and drop effect</param>
+            <param name="dataEvaluator">A function to retrieve the data to drop</param>
+            <param name="conditionEvaluator">A function to check whether the operation should be started or not</param>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.To``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0,`0})">
+            <summary>
+            Defines one or more target controls for the drag and drop operation.
+            </summary>
+            <typeparam name="TControl">The type of the control to drop on</typeparam>
+            <param name="targets">The target controls to drop on</param>
+            <param name="dragDrop">A function to handle the drop on one of the target controls</param>
+            <returns></returns>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.To``1(``0,System.Action{``0,`0})">
+            <summary>
+            Defines a target control for the drag and drop operation.
+            </summary>
+            <typeparam name="TControl">The type of the control to drop on</typeparam>
+            <param name="target">The target control to drop on</param>
+            <param name="dragDrop">A function to handle the drop on the target control</param>
+            <returns></returns>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.To(System.Windows.Forms.Control,FluentDragDrop.DragHandler{`0})">
+            <summary>
+            Attaches the required drag and drop events to a given target control.
+            </summary>
+            <param name="target">The target control to attach the events to</param>
+            <param name="handler">A handle class to link to the target control</param>
+            <returns></returns>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.WithoutPreview">
+            <summary>
+            Prevents the drag and drop operation from showing a preview image.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.WithPreview">
+            <summary>
+            Defines the preview image to be taken from the control directly.
+            </summary>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.WithPreview(System.Func{System.Drawing.Bitmap})">
+            <summary>
+            Defines the preview image for the drag and drop operation.
+            This function will be invoked as soon as the drag and drop operation starts.
+            </summary>
+            <param name="previewEvaluator">A function returning the preview image for the drag and drop operation</param>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.WithPreview(System.Func{FluentDragDrop.Preview.IPreview})">
+            <summary>
+            Defines the preview for the drag and drop operation.
+            This function will be invoked as soon as the drag and drop operation starts.
+            </summary>
+            <param name="previewEvaluator">A function returning the preview for the drag and drop operation</param>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.WithPreview(System.Func{`0,System.Drawing.Bitmap})">
+            <summary>
+            Defines the preview image for the drag and drop operation by the data passed that is passed.
+            This function will be invoked as soon as the drag and drop operation starts.
+            </summary>
+            <param name="previewEvaluator">A function returning the preview image for the drag and drop operation</param>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.WithPreview(System.Func{`0,FluentDragDrop.Preview.IPreview})">
+            <summary>
+            Defines the preview for the drag and drop operation by the datathat is passed.
+            This function will be invoked as soon as the drag and drop operation starts.
+            </summary>
+            <param name="previewEvaluator">A function returning the preview for the drag and drop operation</param>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.WithPreview(System.Func{System.Drawing.Bitmap,`0,System.Drawing.Bitmap})">
+            <summary>
+            Defines how the default preview image should be modified for the drag and drop operation.
+            This function will be invoked as soon as the drag and drop operation starts.
+            </summary>
+            <param name="previewMutator">A mutator function to modify the preview image for the drag and drop operation</param>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.WithPreview(System.Func{System.Drawing.Bitmap,`0,FluentDragDrop.Preview.IPreview})">
+            <summary>
+            Defines how the default preview should be modified for the drag and drop operation.
+            This function will be invoked as soon as the drag and drop operation starts.
+            </summary>
+            <param name="previewMutator">A mutator function to modify the preview for the drag and drop operation</param>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.OnBeforeStart(System.Action)">
+            <summary>
+            Defines an action that is executed before the drag and drop operation is started.
+            </summary>
+            <param name="action">The action to execute when a drag and drop operation is started</param>
+            <remarks>It is ensured that this action is executed in the UI thread</remarks>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.OnAfterStart(System.Action)">
+            <summary>
+            Defines an action that is executed after the drag and drop operation was started.
+            </summary>
+            <param name="action">The action to execute when a drag and drop operation is started</param>
+            <remarks>It is ensured that this action is executed in the UI thread</remarks>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.OnDrop(System.Action)">
+            <summary>
+            Defines an action that is executed after the drag and drop operation ended successfully.
+            </summary>
+            <param name="action">The action to execute after the drag and drop operation ended successfully.</param>
+            <remarks>It is ensured that this action is executed in the UI thread</remarks>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.OnCancel(System.Action)">
+            <summary>
+            Defines an action that is executed after the drag and drop operation was cancelled.
+            </summary>
+            <param name="action">The action to execute after the drag and drop operation was cancelled.</param>
+            <remarks>It is ensured that this action is executed in the UI thread</remarks>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.WithStartEffects(FluentDragDrop.Effects.IEffect[])">
+            <summary>
+            Defines one or more effects to start when the drag and drop operation gets started.
+            </summary>
+            <param name="effects">The effects to start</param>
+            <returns></returns>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.WithDropEffects(FluentDragDrop.Effects.IEffect[])">
+            <summary>
+            Defines one or more effects to start when the drag and drop operation gets completed successfully.
+            </summary>
+            <param name="effects">The effects to start</param>
+            <returns></returns>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.WithCancelEffects(FluentDragDrop.Effects.IEffect[])">
+            <summary>
+            Defines one or more effects to start when the draf and drop operation gets cancelled.
+            </summary>
+            <param name="effects">The effects to start</param>
+            <returns></returns>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.WithCursorOffset(System.Int32,System.Int32)">
+            <summary>
+            Defines the cursor offset of the preview image
+            </summary>
+            <param name="x">The offset on the X axis in pixels</param>
+            <param name="y">The offset on the Y axis in pixels</param>
+            <returns></returns>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.WithCursorOffset(System.Func{System.Drawing.Size,System.Drawing.Point})">
+            <summary>
+            Defines the cursor offset of the preview image
+            </summary>
+            <param name="offsetEvaluator">A function calculating the offset of the curor in pixels</param>
+            <returns></returns>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.WithoutMouseHooks">
+            <summary>
+            Prevents mouse hooks and instead uses the Control.GiveFeedback event to update the preview image.
+            This will have negative effects on the smoothness of the drag and drop operation.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.GetControlPreviewBitmap">
+            <summary>
+            Gets a preview image from the source control
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.CalculatePreviewSize">
+            <summary>
+            Calculates the best size for the preview
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.StartOrTrackMouseToStart">
+            <summary>
+            Begins to track the mouse to detect mouse movement to start deferred drag and drop operations
+            </summary>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.Start(System.Windows.Forms.DragDropEffects)">
+            <summary>
+            Starts the drag and drop operation
+            </summary>
+            <param name="effect">The desired drag and drop effect like Copy, Move or Link</param>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.InvokeCancelIfNotDroppedAction">
+            <summary>
+            Invokes OnSafeguardedCancelled() if not canceled or dropped already
+            </summary>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.InvokeDroppedIfNotCancelled">
+            <summary>
+            Invokes OnSafeguardedDrop() if not canceled or dropped already
+            </summary>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.OnSafeguardedBeforeStart">
+            <summary>
+            Gets executed before the drag and drop operation is started
+            </summary>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.OnSafeguardedAfterStart">
+            <summary>
+            Gets executed after the drag and drop operation was started
+            </summary>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.OnSafeguardedDrop">
+            <summary>
+            Gets executed once after the drag and drop operation ended successfully
+            </summary>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.OnSafeguardedCancel">
+            <summary>
+            Gets executed once after the drag and drop operation was cancelled
+            </summary>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.RunActionOnUiThread(System.Action)">
+            <summary>
+            Runs a given action on the UI thread
+            </summary>
+            <param name="action">The action to run on the UI thread</param>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.CleanUp">
+            <summary>
+            Removes the internally attached event handlers from all target controls
+            </summary>
+        </member>
+        <member name="M:FluentDragDrop.DragOperation`1.StopTrackingForDeferredStartOnMouseMove">
+            <summary>
+            Removes the internally attached event handlers to detect mouse movement
+            for deferred drag and drop operations
+            </summary>
+        </member>
+        <member name="P:FluentDragDrop.DragOperation`1.SourceControl">
+            <summary>
+            The control which starts the drag and drop operation
+            </summary>
+        </member>
+        <member name="P:FluentDragDrop.DragOperation`1.Data">
+            <summary>
+            The data to be passed through the drag and drop operation
+            </summary>
+        </member>
+        <member name="T:FluentDragDrop.DragOperationPreview`1">
+            <summary>
+            Defines how the preview should be attached to the mouse cursor
+            </summary>
+            <typeparam name="T">The type of the data to drop</typeparam>
+        </member>
+        <member name="M:FluentDragDrop.DragOperationPreview`1.#ctor(FluentDragDrop.DragOperation{`0})">
+            <summary>
+            Creates a new instance of the operation preview
+            </summary>
+            <param name="operation">The drag and drop operation</param>
+        </member>
+        <member name="M:FluentDragDrop.DragOperationPreview`1.BehindCursor">
+            <summary>
+            Attaches the preview to the bottom right of the cursor so that its upper left corner is next to the mouse cursor.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FluentDragDrop.DragOperationPreview`1.RelativeToCursor">
+            <summary>
+            Attaches the preview relatively to the position of the cursor to the control.
+            This is the most natural mode when dragging the preview of the control itself in original size as it feels like the control is dragged directly.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FluentDragDrop.DragOperationPreview`1.LikeWindowsExplorer">
+            <summary>
+            Attaches the preview above the cursor like the Windows Explorer shows previews while drag and drop operations of files and folders
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FluentDragDrop.DragOperationPreview`1.WithOffset(System.Int32,System.Int32)">
+            <summary>
+            Attaches the preview to the bottom right of the cursor so that its upper left corner is next to the mouse cursor.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:FluentDragDrop.Effects.CompositeEffect">
+            <summary>
+            An effect to bundle and start multiple instances of other effects at the same time
+            </summary>
+        </member>
+        <member name="M:FluentDragDrop.Effects.CompositeEffect.#ctor(FluentDragDrop.Effects.IEffect[])">
+            <summary>
+            Creates a new composite effect to bundle further effects to start simultaneously
+            </summary>
+            <param name="effects">The bundled effects to start</param>
+        </member>
+        <member name="M:FluentDragDrop.Effects.CompositeEffect.Start(FluentDragDrop.Effects.IEffect.Arguments)">
+            <summary>
+            Starts the effect with the given arguments
+            </summary>
+            <param name="arguments">The effect arguments containing information about the preview form and the affected controls</param>
+        </member>
+        <member name="P:FluentDragDrop.Effects.CompositeEffect.Effects">
+            <summary>
+            The effects to start simultaneously
+            </summary>
+        </member>
+        <member name="T:FluentDragDrop.Effects.DefaultEndEffect">
+            <summary>
+            The default effect to end a drag and drop.
+            This effect simply closes the preview form.
+            </summary>
+        </member>
+        <member name="M:FluentDragDrop.Effects.DefaultEndEffect.Start(FluentDragDrop.Effects.IEffect.Arguments)">
+            <summary>
+            Starts the effect with the given arguments
+            </summary>
+            <param name="arguments">The effect arguments containing information about the preview form and the affected controls</param>
+        </member>
+        <member name="M:FluentDragDrop.Effects.DefaultEndEffect.ClosePreview(FluentDragDrop.Effects.IEffect.Arguments)">
+            <summary>
+            Closes and disposes the preview form
+            </summary>
+            <param name="arguments">The effect arguments containing information about the preview form and the affected controls</param>
+        </member>
+        <member name="T:FluentDragDrop.Effects.DefaultStartEffect">
+            <summary>
+            The default effect to start when a drag and drop operation starts.
+            This effect simply shows the preview form.
+            </summary>
+        </member>
+        <member name="M:FluentDragDrop.Effects.DefaultStartEffect.Start(FluentDragDrop.Effects.IEffect.Arguments)">
+            <summary>
+            Starts the effect with the given arguments
+            </summary>
+            <param name="arguments">The effect arguments containing information about the preview form and the affected controls</param>
+        </member>
+        <member name="T:FluentDragDrop.Effects.Effects">
+            <summary>
+            An internal container for the three effects to start, drop and cancel drag and drop operations
+            </summary>
+        </member>
+        <member name="M:FluentDragDrop.Effects.Effects.GetDefaults">
+            <summary>
+            Get the default effects
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:FluentDragDrop.Effects.Effects.StartEffect">
+            <summary>
+            The effect to start at the beginning of the drag and drop operation
+            </summary>
+        </member>
+        <member name="P:FluentDragDrop.Effects.Effects.DropEffect">
+            <summary>
+            The effect to start when the drag and drop operation was completed successfully
+            </summary>
+        </member>
+        <member name="P:FluentDragDrop.Effects.Effects.CancelEffect">
+            <summary>
+            The effect to start when the drag and drop operation was cancelled
+            </summary>
+        </member>
+        <member name="T:FluentDragDrop.Effects.IEffect">
+            <summary>
+            Defines the interface for drag and drop effects
+            </summary>
+        </member>
+        <member name="M:FluentDragDrop.Effects.IEffect.Start(FluentDragDrop.Effects.IEffect.Arguments)">
+            <summary>
+            Starts the effect with the given arguments
+            </summary>
+            <param name="arguments">The effect arguments containing information about the preview form and the affected controls</param>
+        </member>
+        <member name="T:FluentDragDrop.Effects.IEffect.Arguments">
+            <summary>
+            An arguments container bundling drag and drop effect arguments like the preview form and the affected controls
+            </summary>
+        </member>
+        <member name="M:FluentDragDrop.Effects.IEffect.Arguments.#ctor(System.Windows.Forms.Form,System.Windows.Forms.Control,System.Windows.Forms.Control)">
+            <summary>
+            Creates a new instance of the arguments container
+            </summary>
+            <param name="previewForm">The preview form used to display the preview image while dragging</param>
+            <param name="sourceControl">The control which started the drag and drop operation</param>
+            <param name="targetControl">The control which received the drop - if any</param>
+        </member>
+        <member name="P:FluentDragDrop.Effects.IEffect.Arguments.PreviewForm">
+            <summary>
+            The preview form used to display the preview image while dragging
+            </summary>
+        </member>
+        <member name="P:FluentDragDrop.Effects.IEffect.Arguments.SourceControl">
+            <summary>
+            The control which started the drag and drop operation
+            </summary>
+        </member>
+        <member name="P:FluentDragDrop.Effects.IEffect.Arguments.TargetControl">
+            <summary>
+            The control which received the drop - if any
+            </summary>
+            <remarks>Might be null if the drag and drop operation was cancelled</remarks>
+        </member>
+        <member name="T:FluentDragDrop.ImmediateDragDefinition">
+            <summary>
+            Defines an immediate drag and drop operation on mouse down
+            </summary>
+        </member>
+        <member name="M:FluentDragDrop.ImmediateDragDefinition.#ctor(System.Windows.Forms.Control,System.Windows.Forms.DragDropEffects)">
+            <summary>
+            Creates a new instance of the drag definition
+            </summary>
+            <param name="control">The control which starts the drag and drop operation</param>
+            <param name="effect">The desired drag and drop effect like Copy, Move or Link</param>
+        </member>
+        <member name="M:FluentDragDrop.ImmediateDragDefinition.WithData``1(``0)">
+            <summary>
+            Defines the data object that should be passed through the drag and drop operation
+            </summary>
+            <typeparam name="T">The type of the data object to pass</typeparam>
+            <param name="data">The data object to pass</param>
+            <returns></returns>
+        </member>
+        <member name="T:FluentDragDrop.NullPlaceholder">
+            <summary>
+            A placeholder for drag and drop operations passing null as data object to prevent NullReferenceExceptions.
+            </summary>
+        </member>
+        <member name="T:FluentDragDrop.Preview.IPreview">
+            <summary>
+            The interface for previews to be shown during drag and drop operations
+            </summary>
+        </member>
+        <member name="M:FluentDragDrop.Preview.IPreview.Render(System.Drawing.Graphics)">
+            <summary>
+            Renders the preview onto the graphics object of the preview element
+            </summary>
+            <param name="graphics">The graphics object of the preview element</param>
+        </member>
+        <member name="P:FluentDragDrop.Preview.IPreview.PreferredSize">
+            <summary>
+            Gets the preferred size of the preview
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:FluentDragDrop.Preview.IPreviewOpacityController">
+            <summary>
+            The interface for previews to be shown during drag and drop operations
+            </summary>
+        </member>
+        <member name="P:FluentDragDrop.Preview.IPreviewOpacityController.Opacity">
+            <summary>
+            Gets the opacity of the preview
+            </summary>
+        </member>
+        <member name="P:FluentDragDrop.Preview.IPreviewOpacityController.TransparencyKey">
+            <summary>
+            Gets the color which should be used as transparency key.
+            Each pixel in this color is transparent.
+            Use Color.Empty to 
+            </summary>
+        </member>
+        <member name="T:FluentDragDrop.Preview.IUpdatablePreview">
+            <summary>
+            The interface for updatable preview which can be changed during a drag and drop operation
+            </summary>
+        </member>
+        <member name="E:FluentDragDrop.Preview.IUpdatablePreview.Updated">
+            <summary>
+            The event to notify the drag and drop operation that the preview was updated
+            and needs to be redrawn
+            </summary>
+        </member>
+        <member name="M:FluentDragDrop.Preview.IUpdatablePreview.Start">
+            <summary>
+            Starts the preview 
+            </summary>
+            <remarks>Can be used to start animated previews</remarks>
+        </member>
+        <member name="M:FluentDragDrop.Preview.IUpdatablePreview.Stop">
+            <summary>
+            Stops the preview
+            </summary>
+            <remarks>Can be used to stop animated previews</remarks>
+        </member>
+        <member name="P:FluentDragDrop.Preview.OverlayForm.ShowWithoutActivation">
+            <summary>
+            Overrides the hidden base property to prevent the overlay form from getting
+            activated. This alone would not be enough but in combination with the message
+            handling in WndProc(), it prevents the activation and makes the preview as smooths as possible.
+            </summary>
+        </member>
+    </members>
+</doc>

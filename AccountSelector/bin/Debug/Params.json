@@ -1,0 +1,32 @@
+[
+  {
+    "ButtonName": "F2",
+    "Name": "NextBtn",
+    "VKValue": 113
+  },
+  {
+    "ButtonName": "F1",
+    "Name": "PrevBtn",
+    "VKValue": 112
+  },
+  {
+    "ButtonName": "Up",
+    "Name": "HautBtn",
+    "VKValue": 38
+  },
+  {
+    "ButtonName": "Down",
+    "Name": "BasBtn",
+    "VKValue": 40
+  },
+  {
+    "ButtonName": "Left",
+    "Name": "GaucheBtn",
+    "VKValue": 37
+  },
+  {
+    "ButtonName": "Right",
+    "Name": "DroiteBtn",
+    "VKValue": 39
+  }
+]
